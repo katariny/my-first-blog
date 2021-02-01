@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %} #Sempre ficar no topo#
+
+{% load static %}
+<html>
+    <head>
+        <title>Gjango Blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+
+    {% block content %}
+        <div class="post">
+            {% if post.published_date %}
+                <div class="date">
+                    {{ post.published_date }}
+                </div>
+            {% endif %}
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+        <a href="{% url 'coment_new' post.id %}" class=""><span class="glyphicon glyphicon-plus"></span>Comentar</a> <!---link de editar-->
+        {% for comentario in comentarios %}
+        <div>
+            <p>{{ comentario.text }}</p>
+            <p>{{ comentario.author }}</p>
+        </div>
+        <hr>
+     {% endfor %}
+    {% endblock %}
+    </body>
+</html>
